@@ -68,16 +68,16 @@ int Tetromino::Rotate(int nPosX, int nPosY, int nCurrentRotation)
 	switch (nCurrentRotation % 4)
 	{
 	case 0:
-		return nPosY * 4 + nPosX;
+		return nPosY * 4 + nPosX;			//0 degree rotation
 
 	case 1:
-		return 12 + nPosY - (nPosX * 4);
+		return 12 + nPosY - (nPosX * 4);	//90 degree rotation
 
 	case 2:
-		return 15 - (nPosY * 4) - nPosX;
+		return 15 - (nPosY * 4) - nPosX;	//180 degree rotation
 
 	case 3:
-		return 3 - nPosY + (nPosX * 4);
+		return 3 - nPosY + (nPosX * 4);		//270 degree rotation
 	}
 }
 

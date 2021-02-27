@@ -4,7 +4,6 @@
 
 class Tetromino
 {
-
 public:
 	//Attributes:
 	std::wstring* pTetromino;
