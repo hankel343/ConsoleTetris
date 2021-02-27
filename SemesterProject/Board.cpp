@@ -22,6 +22,16 @@ void Board::UpdateScreen(PlayField& PlayFieldObj)
 			pScreen[(y + SCREEN_OFFSET) * nScreenWidth + (x + SCREEN_OFFSET)] = " ABCDEFG=#"[PlayFieldObj.pField[y * nFieldWidth + x]];
 }
 
+void Board::DrawPiece(Tetromino& FallingPiece)
+{
+	for (int x = 0; x < 4; x++)
+		for (int y = 0; y < 4; y++)
+			if (FallingPiece.pTetromino[FallingPiece.nCurrentPiece][FallingPiece.Rotate(x, y, FallingPiece.nCurrentRotation)] == L'X') {
+				pScreen[(FallingPiece.nCurrentY + y + SCREEN_OFFSET) * nScreenWidth + (FallingPiece.nCurrentX + x + SCREEN_OFFSET)] = char(FallingPiece.nCurrentPiece + 65);
+			}
+
+}
+
 void Board::DisplayFrame()
 {
 	WriteConsoleOutputCharacter(hConsole, pScreen, nScreenWidth * nScreenHeight, { 0,0 }, &dwBytesWritten);

@@ -2,6 +2,7 @@
 #define BOARD_H
 #include <Windows.h>
 #include "PlayField.h"
+#include "Tetromino.h"
 
 class Board
 {
@@ -21,6 +22,7 @@ public:
 
 	//Methods:
 	void UpdateScreen(PlayField& PlayFieldObj);
+	void DrawPiece(Tetromino& FallingPiece);
 	void DisplayFrame();
 
 	//Destructor:

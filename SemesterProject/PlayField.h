@@ -1,5 +1,6 @@
 #ifndef PLAYFIELD_H
 #define PLAYFIELD_H
+#include <string>
 
 class PlayField
 {
@@ -15,7 +16,6 @@ public:
 	PlayField();
 
 	//Methods:
-	int RotatePiece(int nPosX, int nPosY, int rotation);
 	int GetFieldWidth() const;
 	int GetFieldHeight() const;
 	bool IsValidMovement(int nCurrentPiece, int nCurrentRotation, int nPosX, int nPosY);
