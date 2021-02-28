@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <vector>
 #include "Tetromino.h"
 
 class PlayField
@@ -20,6 +21,8 @@ public:
 	int GetFieldHeight() const;
 	bool IsValidMovement(Tetromino& FallingPiece, int nCurrentRotation, int nPosX, int nPosY);
 	void LockPiece(Tetromino& FallingPiece);
+	void CheckForLines(Tetromino& FallingPiece, std::vector<int>& vRemovedLines);
+	void MoveCompletedLineDown(std::vector<int>& vRemovedLines);
 	void ProcessKeyPress(int nDirection, Tetromino& FallingPiece);
 
 	//Destructor:

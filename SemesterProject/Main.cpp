@@ -1,4 +1,5 @@
 #include <thread>
+#include <vector>
 #include "Board.h"
 
 using namespace std;
@@ -19,8 +20,9 @@ int main()
 	int nSpeed = 20;
 	int nSpeedCounter = 0;
 	bool bForceDown = false;
+	vector<int> vRemovedLines;
 	FallingBlock.GetNewPiece(); //Get an initial piece for the first iteration.
-
+	
 	//Game Loop:
 	while (bGameOver == false)
 	{
@@ -54,31 +56,35 @@ int main()
 				FallingBlock.nCurrentY++; //If the piece can fit farther down, then push the piece farther down the screen.
 			else
 			{
-				//Lock into Play Field
+				//Lock into play field:
 				PlayField.LockPiece(FallingBlock);
 
-				//Check if any lines are formed
+				//Check if any lines are formed:
+				PlayField.CheckForLines(FallingBlock, vRemovedLines);
 
-				//Get next piece
+				//Get next piece:
 				FallingBlock.GetNewPiece();
 
-				//If new block does not fit, then the game is over.
+				//If new block does not fit, then the game is over:
 				bGameOver = (PlayField.IsValidMovement(FallingBlock, FallingBlock.nCurrentRotation, FallingBlock.nCurrentX, FallingBlock.nCurrentY) == false);
 			}
 			
 			nSpeedCounter = 0;
 		}
 
-
 		/*========= RENDER OUTPUT =========*/
 		GameBoard.UpdateScreen(PlayField);
 		GameBoard.DrawPiece(FallingBlock);
 
 		//Display Frame:
-		GameBoard.DisplayFrame();
+		if (!(vRemovedLines.empty())) //If some lines have been removed from the play field
+		{
+			GameBoard.DisplayFrame();
+			this_thread::sleep_for(100ms); //Adds a delay so the player can see that they completed a line.
+			PlayField.MoveCompletedLineDown(vRemovedLines);
+		} else
+			GameBoard.DisplayFrame();
 	}
-
-
 
 	return 0;
 }

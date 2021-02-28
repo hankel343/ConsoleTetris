@@ -55,6 +55,29 @@ void PlayField::LockPiece(Tetromino& FallingPiece)
 		}
 }
 
+void PlayField::CheckForLines(Tetromino& FallingPiece, std::vector<int>& vRemovedLines)
+{
+	for (int y = 0; y < 4; y++)
+		if (FallingPiece.nCurrentY + y < nFieldHeight - 1)
+		{
+			bool bIsLine = true;
+			//Loop checks across the non-border elements of the play field (borders at x==0 and x == nFieldWidth)
+			for (int x = 1; x < nFieldWidth - 1; x++) //Peforms bitwise AND with value found in play field
+				bIsLine &= (pField[(FallingPiece.nCurrentY + y) * nFieldWidth + x]) != 0;
+				//If the bitwise operation is false (caused by a zero in the play field rep. by a 0) then we know there is not a line.
+
+			if (bIsLine) //If this is true, there is a line present in the play field.
+			{
+				//Set line contents equal to '='
+				for (int x = 1; x < nFieldWidth - 1; x++)
+					pField[(FallingPiece.nCurrentY + y) * nFieldWidth + x] = 8;
+
+				//Following pushes the completed line to a vector
+				vRemovedLines.push_back(FallingPiece.nCurrentY + y);
+			}
+		}
+}
+
 void PlayField::ProcessKeyPress(int nDirection, Tetromino& Piece)
 {
 	switch (nDirection)
@@ -79,6 +102,19 @@ void PlayField::ProcessKeyPress(int nDirection, Tetromino& Piece)
 			Piece.nCurrentRotation = Piece.nCurrentRotation + 1;
 		break;
 	}
+}
+
+void PlayField::MoveCompletedLineDown(std::vector<int>& vRemovedLines)
+{
+	for (int &v : vRemovedLines)
+		for (int x = 1; x < nFieldWidth - 1; x++) //Scan across every column of the play field.
+		{
+			for (int y = v; y > 0; y--)
+				pField[y * nFieldWidth + x] = pField[(y - 1) * nFieldWidth + x];
+			pField[x] = 0;
+		}
+
+	vRemovedLines.clear();
 }
 
 PlayField::~PlayField()
