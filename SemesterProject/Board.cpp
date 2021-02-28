@@ -19,7 +19,10 @@ void Board::UpdateScreen(PlayField& PlayFieldObj)
 
 	for (int x = 0; x < nFieldWidth; x++)
 		for (int y = 0; y < nFieldHeight; y++)
+		{
 			pScreen[(y + SCREEN_OFFSET) * nScreenWidth + (x + SCREEN_OFFSET)] = " ABCDEFG=#"[PlayFieldObj.pField[y * nFieldWidth + x]];
+		}
+			
 }
 
 void Board::DrawPiece(Tetromino& FallingPiece)

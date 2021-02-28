@@ -1,5 +1,4 @@
-#ifndef PLAYFIELD_H
-#define PLAYFIELD_H
+#pragma once
 #include <string>
 #include "Tetromino.h"
 
@@ -20,9 +19,8 @@ public:
 	int GetFieldWidth() const;
 	int GetFieldHeight() const;
 	bool IsValidMovement(Tetromino& FallingPiece, int nCurrentRotation, int nPosX, int nPosY);
+	void ProcessKeyPress(int nDirection, Tetromino& FallingPiece);
 
 	//Destructor:
 	~PlayField();
 };
-
-#endif PLAYFIELD_H

@@ -1,5 +1,4 @@
-#ifndef TETROMINO_H
-#define TETROMINO_H
+#pragma once
 #include <string>
 
 class Tetromino
@@ -25,5 +24,3 @@ public:
 	~Tetromino();
 
 };
-
-#endif TETROMINO_H

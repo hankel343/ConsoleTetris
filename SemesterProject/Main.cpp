@@ -16,7 +16,7 @@ int main()
 	//Game Logic:
 	bool bGameOver = false;
 	bool bKey[4];
-	bool bRotateHold = true;
+	bool bRotateHold = true; //Used to prevent rotation of the piece from happening too fast.
 	Pieces.GetNewPiece(); //Get an initial piece for the first iteration.
 
 	//Game Loop:
@@ -30,33 +30,17 @@ int main()
 			bKey[i] = (0x8000 & GetAsyncKeyState((unsigned char)("\x27\x25\x28Z"[i]))) != 0;
 		//Stores T in the array if the key is being pressed. False otherwise.
 
-		if (bKey[1]) //Left
-		{
-			if (PlayField.IsValidMovement(Pieces, Pieces.nCurrentRotation, Pieces.nCurrentX-1, Pieces.nCurrentY))
-				Pieces.nCurrentX = Pieces.nCurrentX - 1;
-		}
-
 		if (bKey[0]) //Right
-		{
-			if (PlayField.IsValidMovement(Pieces, Pieces.nCurrentRotation, Pieces.nCurrentX + 1, Pieces.nCurrentY))
-				Pieces.nCurrentX = Pieces.nCurrentX + 1;
-		}
-
+			PlayField.ProcessKeyPress(0, Pieces);
+		if (bKey[1]) //Left
+			PlayField.ProcessKeyPress(1, Pieces);
 		if (bKey[2]) //Down
+			PlayField.ProcessKeyPress(2, Pieces);
+		if (bKey[3]) //Rotate
 		{
-			if (PlayField.IsValidMovement(Pieces, Pieces.nCurrentRotation, Pieces.nCurrentX, Pieces.nCurrentY + 1))
-				Pieces.nCurrentY = Pieces.nCurrentY + 1;
-		}
-
-		if (bKey[3]) //Z
-		{
-			if (PlayField.IsValidMovement(Pieces, Pieces.nCurrentRotation + 1, Pieces.nCurrentX, Pieces.nCurrentY))
-			{
-				Pieces.nCurrentRotation = Pieces.nCurrentRotation + 1;
-				bRotateHold = false;
-			}
-		}
-		else
+			PlayField.ProcessKeyPress(3, Pieces);
+			bRotateHold = false;
+		} else
 			bRotateHold = true;
 
 		/*========= RENDER OUTPUT =========*/

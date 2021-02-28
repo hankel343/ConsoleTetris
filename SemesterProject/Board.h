@@ -1,5 +1,4 @@
-#ifndef BOARD_H
-#define BOARD_H
+#pragma once
 #include <Windows.h>
 #include "PlayField.h"
 #include "Tetromino.h"
@@ -28,5 +27,3 @@ public:
 	//Destructor:
 	~Board();
 };
-
-#endif BOARD_H
