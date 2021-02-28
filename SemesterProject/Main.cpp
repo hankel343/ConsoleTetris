@@ -1,4 +1,3 @@
-#include <iostream>
 #include <thread>
 #include "Board.h"
 
@@ -11,41 +10,69 @@ int main()
 	//Creating Game Objects:
 	Board GameBoard;
 	PlayField PlayField;
-	Tetromino Pieces;
+	Tetromino FallingBlock;
 
 	//Game Logic:
 	bool bGameOver = false;
 	bool bKey[4];
 	bool bRotateHold = true; //Used to prevent rotation of the piece from happening too fast.
-	Pieces.GetNewPiece(); //Get an initial piece for the first iteration.
+	int nSpeed = 20;
+	int nSpeedCounter = 0;
+	bool bForceDown = false;
+	FallingBlock.GetNewPiece(); //Get an initial piece for the first iteration.
 
 	//Game Loop:
 	while (bGameOver == false)
 	{
 		/*=========== TIMING ===========*/
 		this_thread::sleep_for(100ms);
+		nSpeedCounter++;
+		bForceDown = (nSpeedCounter == nSpeed); //Once nSpeedCounter has accumulated enough ticks to be eq. to nSpeed, the shape is automatically forced down.
 
 		/*========= PLAYER INPUT ==========*/
 		for (int i = 0; i < 4; i++)	//Uses virtual key codes for left, right, down, and 'z' keys
 			bKey[i] = (0x8000 & GetAsyncKeyState((unsigned char)("\x27\x25\x28Z"[i]))) != 0;
 		//Stores T in the array if the key is being pressed. False otherwise.
 
+		/*=========== GAME LOGIC ===========*/
 		if (bKey[0]) //Right
-			PlayField.ProcessKeyPress(0, Pieces);
+			PlayField.ProcessKeyPress(0, FallingBlock);
 		if (bKey[1]) //Left
-			PlayField.ProcessKeyPress(1, Pieces);
+			PlayField.ProcessKeyPress(1, FallingBlock);
 		if (bKey[2]) //Down
-			PlayField.ProcessKeyPress(2, Pieces);
+			PlayField.ProcessKeyPress(2, FallingBlock);
 		if (bKey[3]) //Rotate
 		{
-			PlayField.ProcessKeyPress(3, Pieces);
-			bRotateHold = false;
+			PlayField.ProcessKeyPress(3, FallingBlock);
+			bRotateHold = false; //If the user is pressing 'z', this will be set to false which will prevent the piece from spinning at the frame rate. 
 		} else
 			bRotateHold = true;
 
+		if (bForceDown) //Appropriate amount of time has elapsed for the falling block to be forced down the screen.
+		{
+			if (PlayField.IsValidMovement(FallingBlock, FallingBlock.nCurrentRotation, FallingBlock.nCurrentX, FallingBlock.nCurrentY + 1))
+				FallingBlock.nCurrentY++; //If the piece can fit farther down, then push the piece farther down the screen.
+			else
+			{
+				//Lock into Play Field
+				PlayField.LockPiece(FallingBlock);
+
+				//Check if any lines are formed
+
+				//Get next piece
+				FallingBlock.GetNewPiece();
+
+				//If new block does not fit, then the game is over.
+				bGameOver = (PlayField.IsValidMovement(FallingBlock, FallingBlock.nCurrentRotation, FallingBlock.nCurrentX, FallingBlock.nCurrentY) == false);
+			}
+			
+			nSpeedCounter = 0;
+		}
+
+
 		/*========= RENDER OUTPUT =========*/
 		GameBoard.UpdateScreen(PlayField);
-		GameBoard.DrawPiece(Pieces);
+		GameBoard.DrawPiece(FallingBlock);
 
 		//Display Frame:
 		GameBoard.DisplayFrame();

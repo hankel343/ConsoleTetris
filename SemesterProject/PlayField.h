@@ -19,6 +19,7 @@ public:
 	int GetFieldWidth() const;
 	int GetFieldHeight() const;
 	bool IsValidMovement(Tetromino& FallingPiece, int nCurrentRotation, int nPosX, int nPosY);
+	void LockPiece(Tetromino& FallingPiece);
 	void ProcessKeyPress(int nDirection, Tetromino& FallingPiece);
 
 	//Destructor:

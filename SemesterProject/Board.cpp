@@ -37,7 +37,7 @@ void Board::DrawPiece(Tetromino& FallingPiece)
 
 void Board::DisplayFrame()
 {
-	WriteConsoleOutputCharacter(hConsole, pScreen, nScreenWidth * nScreenHeight, { 0,0 }, &dwBytesWritten);
+	WriteConsoleOutputCharacter(hConsole, pScreen, nScreenWidth * nScreenHeight, { 0, 0 }, &dwBytesWritten);
 }
 
 Board::~Board()

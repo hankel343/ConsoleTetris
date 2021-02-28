@@ -45,6 +45,16 @@ bool PlayField::IsValidMovement(Tetromino& FallingPiece, int nCurrentRotation, i
 	return true; //Returns true if all array indexes are checked and found to have no collisions. 
 }
 
+void PlayField::LockPiece(Tetromino& FallingPiece)
+{
+	for (int x = 0; x < 4; x++)
+		for (int y = 0; y < 4; y++)
+		{
+			if (FallingPiece.pTetromino[FallingPiece.nCurrentPiece][FallingPiece.Rotate(x, y, FallingPiece.nCurrentRotation)] == L'X')
+				pField[(FallingPiece.nCurrentY + y) * nFieldWidth + (FallingPiece.nCurrentX + x)] = FallingPiece.nCurrentPiece + 1;
+		}
+}
+
 void PlayField::ProcessKeyPress(int nDirection, Tetromino& Piece)
 {
 	switch (nDirection)
