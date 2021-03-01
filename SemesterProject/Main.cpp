@@ -22,7 +22,7 @@ int main()
 	bool bForceDown = false;
 	vector<int> vRemovedLines;
 	FallingBlock.GetNewPiece(); //Get an initial piece for the first iteration.
-	
+
 	//Game Loop:
 	while (bGameOver == false)
 	{
@@ -47,7 +47,8 @@ int main()
 		{
 			PlayField.ProcessKeyPress(3, FallingBlock);
 			bRotateHold = false; //If the user is pressing 'z', this will be set to false which will prevent the piece from spinning at the frame rate. 
-		} else
+		}
+		else
 			bRotateHold = true;
 
 		if (bForceDown) //Appropriate amount of time has elapsed for the falling block to be forced down the screen.
@@ -68,7 +69,7 @@ int main()
 				//If new block does not fit, then the game is over:
 				bGameOver = (PlayField.IsValidMovement(FallingBlock, FallingBlock.nCurrentRotation, FallingBlock.nCurrentX, FallingBlock.nCurrentY) == false);
 			}
-			
+
 			nSpeedCounter = 0;
 		}
 
@@ -82,9 +83,13 @@ int main()
 			GameBoard.DisplayFrame();
 			this_thread::sleep_for(100ms); //Adds a delay so the player can see that they completed a line.
 			PlayField.MoveCompletedLineDown(vRemovedLines);
-		} else
+		}
+		else
 			GameBoard.DisplayFrame();
 	}
+
+	//Release Windows Handle:
+	CloseHandle(GameBoard.GetHandle());
 
 	return 0;
 }

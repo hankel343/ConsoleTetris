@@ -23,6 +23,7 @@ public:
 	void UpdateScreen(PlayField& PlayFieldObj);
 	void DrawPiece(Tetromino& FallingPiece);
 	void DisplayFrame();
+	HANDLE GetHandle();
 
 	//Destructor:
 	~Board();

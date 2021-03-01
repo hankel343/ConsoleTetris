@@ -22,7 +22,7 @@ void Board::UpdateScreen(PlayField& PlayFieldObj)
 		{
 			pScreen[(y + SCREEN_OFFSET) * nScreenWidth + (x + SCREEN_OFFSET)] = " ABCDEFG=#"[PlayFieldObj.pField[y * nFieldWidth + x]];
 		}
-			
+
 }
 
 void Board::DrawPiece(Tetromino& FallingPiece)
@@ -38,7 +38,12 @@ void Board::DrawPiece(Tetromino& FallingPiece)
 void Board::DisplayFrame()
 {
 	WriteConsoleOutputCharacter(hConsole, pScreen, nScreenWidth * nScreenHeight, { 0, 0 }, &dwBytesWritten);
-	
+
+}
+
+HANDLE Board::GetHandle()
+{
+	return hConsole;
 }
 
 Board::~Board()
