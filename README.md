@@ -4,7 +4,7 @@ This is a project that I put together after researching several resources with t
 Here is a list of the resources that I during the creation of this project:
 
 Youtuber Javidx9's video on Tetris:
-https://www.youtube.com/watch?v=8OK8_tHeCIA -> One of the most useful thing that I learned from this was how to work with 1 dimensional arrays by using index accessing formulas
+https://www.youtube.com/watch?v=8OK8_tHeCIA -> One of the most useful things that I learned from this was how to work with 1 dimensional arrays by using index accessing formulas
 
 Blog post by Javier Lopez:
 https://javilop.com/gamedev/tetris-tutorial-in-c-platform-independent-focused-in-game-logic-for-beginners/ - I learned alot from comparing the tetromino storage in this post (4 dimensional array) vs. the previous resource that simply used array manipulation. This project also used the SDL library, so I will investigate this as well.
